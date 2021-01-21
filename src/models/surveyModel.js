@@ -11,14 +11,14 @@ let surveyCollection = new Schema({
     required: false,
   },
   id_user: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   public: {
     type: Boolean,
-    required: true,
     default: true,
   },
 });
 
-module.exports = mongoose.model('User', surveyCollection);
+module.exports = mongoose.model('Survey', surveyCollection);

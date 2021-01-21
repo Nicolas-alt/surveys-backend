@@ -5,7 +5,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 // TODO server vars
 
-process.env.TOKEN = 60 * 60 * 24 * 7;
+process.env.TOKEN = '24h';
 process.env.SEED = process.env.SEED || 'temporal-seed';
 
 // db

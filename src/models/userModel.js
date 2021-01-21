@@ -38,6 +38,14 @@ let userCollection = new Schema({
   },
 });
 
+userCollection.methods.toJSON = function () {
+  let user = this;
+  let userObject = user.toObject();
+  delete userObject.password;
+
+  return userObject;
+};
+
 userCollection.plugin(uniqueValidator, { message: '{PATH} already register' });
 
 module.exports = mongoose.model('User', userCollection);
