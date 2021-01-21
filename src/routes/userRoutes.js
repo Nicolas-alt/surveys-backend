@@ -1,29 +1,12 @@
 const express = require('express');
 const app = express();
-const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 
-app.get('/api/v1/user', (req, res) => {
-  let startFrom = req.query.start || 0;
-  startFrom = Number(startFrom);
+const User = require('../models/userModel');
+const userTokenAuth = require('../middlewares/UserAuth');
+const adminRolAuth = require('../middlewares/UserRole');
 
-  User.find({})
-    .skip(startFrom)
-    .limit(15)
-    .exec((err, users) => {
-      if (err) {
-        return res.status(400).json({ msg: 'Ups', err });
-      }
-
-      User.count({}, (err, total) => {
-        res.json({
-          total,
-          users,
-        });
-      });
-    });
-});
-
+//  register
 app.post('/api/v1/user', (req, res) => {
   let dataBody = req.body;
 
@@ -49,7 +32,29 @@ app.post('/api/v1/user', (req, res) => {
   });
 });
 
-app.put('/api/v1/user/:id', (req, res) => {
+// userS data
+app.get('/api/v1/user', [userTokenAuth, adminRolAuth], (req, res) => {
+  let startFrom = req.query.start || 0;
+  startFrom = Number(startFrom);
+
+  User.find({})
+    .skip(startFrom)
+    .limit(15)
+    .exec((err, users) => {
+      if (err) return res.status(400).json({ msg: 'Ups', err });
+
+      User.count({}, (err, total) => {
+        if (err) return res.status(400).json({ msg: 'Ups', err });
+
+        res.json({
+          total,
+          users,
+        });
+      });
+    });
+});
+
+app.put('/api/v1/user/:id', userTokenAuth, (req, res) => {
   let id = req.params.id;
   let body = req.body;
 

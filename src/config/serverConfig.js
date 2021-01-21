@@ -3,6 +3,12 @@ process.env.PORT = process.env.PORT || 3200;
 // env
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
+// TODO server vars
+
+process.env.TOKEN = 60 * 60 * 24 * 7;
+process.env.SEED = process.env.SEED || 'temporal-seed';
+
+// db
 let originDb;
 
 if (process.env.NODE_ENV === 'dev') {

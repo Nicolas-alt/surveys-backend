@@ -14,6 +14,6 @@ mongoose.connect(process.env.URLDB, (err, res) => {
   console.log('DB ok');
 });
 
-app.use(require('./src/routes/userRoutes'));
+app.use(require('./src/routes/index'));
 
 app.listen(process.env.PORT);
