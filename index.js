@@ -9,7 +9,7 @@ require('./src/config/serverConfig');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/surveys', (err, res) => {
+mongoose.connect(process.env.URLDB, (err, res) => {
   if (err) throw err;
   console.log('DB ok');
 });
