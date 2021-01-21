@@ -31,7 +31,10 @@ app.get('/api/v1/surveys', [userTokenAuth], (req, res) => {
 // One
 app.get('/api/v1/surveys/:name', [userTokenAuth], (req, res) => {
   let titleSurvey = req.params.name;
-  Survey.find({ title: { $regex: titleSurvey } }, (err, surveyFromDb) => {
+
+  let regex = new RegExp(titleSurvey, 'i');
+
+  Survey.find({ title: regex }, (err, surveyFromDb) => {
     if (err) {
       return res.status(400).json({
         msg: 'Something is wrong',
