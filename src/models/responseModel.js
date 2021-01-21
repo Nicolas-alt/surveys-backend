@@ -6,6 +6,10 @@ let responseCollection = new Schema({
     type: Array,
     required: [true, 'The response for survey is required'],
   },
+  multipleResponse: {
+    type: Boolean,
+    required: true,
+  },
   id_question: {
     type: Schema.Types.ObjectId,
     ref: 'Question',
