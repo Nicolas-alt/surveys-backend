@@ -11,6 +11,16 @@ let userResponseCollection = new Schema({
     ref: 'Response',
     required: true,
   },
+  id_question: {
+    type: Schema.Types.ObjectId,
+    ref: 'Question',
+    required: true,
+  },
+  id_survey: {
+    type: Schema.Types.ObjectId,
+    ref: 'Survey',
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('UserResponse', userResponseCollection);

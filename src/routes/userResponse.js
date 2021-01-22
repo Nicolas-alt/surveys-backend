@@ -9,6 +9,8 @@ const adminRolAuth = require('../middlewares/UserRole');
 app.get('/api/v1/user-response-question', [userTokenAuth], (req, res) => {
   UserResponse.find({})
     .populate('id_response')
+    .populate('id_question')
+    .populate('id_survey')
     .exec((err, userResponseFromDb) => {
       if (err) return res.status(400).json({ msg: 'Ups', err });
 
@@ -31,7 +33,9 @@ app.post(
 
     let userResponse = new UserResponse({
       response: dataBody.response,
-      id_response: dataBody.id_question,
+      id_response: dataBody.id_response,
+      id_question: dataBody.id_question,
+      id_survey: dataBody.id_survey,
     });
 
     userResponse.save((err, userResponseFromDb) => {
@@ -72,22 +76,6 @@ app.put(
         });
       }
     );
-  }
-);
-
-app.delete(
-  '/api/v1/user-response-question/:id',
-  [userTokenAuth, adminRolAuth],
-  (req, res) => {
-    let idUserResponse = req.params.id;
-    UserResponse.findByIdAndRemove(idUserResponse, (err, responseFromDb) => {
-      if (err) return res.status(500).json({ msg: 'Ups', err });
-
-      if (!idUserResponse)
-        return res.status(500).json({ msg: "Can't delete the survey", err });
-    });
-
-    res.status(200).json({ msg: 'Response delete!' });
   }
 );
 

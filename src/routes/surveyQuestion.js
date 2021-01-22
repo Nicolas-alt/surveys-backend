@@ -6,6 +6,7 @@ const userTokenAuth = require('../middlewares/UserAuth');
 const adminRolAuth = require('../middlewares/UserRole');
 
 // All
+
 app.get('/api/v1/question', [userTokenAuth], (req, res) => {
   Question.find({})
     .populate('id_survey')
@@ -28,8 +29,8 @@ app.post('/api/v1/question', [userTokenAuth, adminRolAuth], (req, res) => {
 
   let question = new Question({
     description: dataBody.description,
-    image: req.dataBody.image,
-    id_survey: req.dataBody.id_survey,
+    image: dataBody.image,
+    id_survey: dataBody.id_survey,
   });
 
   question.save((err, questionFromDb) => {

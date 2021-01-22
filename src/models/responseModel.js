@@ -8,6 +8,7 @@ let responseCollection = new Schema({
   },
   multipleResponse: {
     type: Boolean,
+    default: true,
     required: true,
   },
   id_question: {

@@ -29,7 +29,7 @@ app.post('/api/v1/response', [userTokenAuth, adminRolAuth], (req, res) => {
   let response = new Response({
     response: dataBody.response,
     multipleResponse: dataBody.multiple,
-    id_question: req.user.id_question,
+    id_question: dataBody.id_question,
   });
 
   response.save((err, responseFromDb) => {
@@ -45,24 +45,24 @@ app.post('/api/v1/response', [userTokenAuth, adminRolAuth], (req, res) => {
 });
 
 app.put('/api/v1/response/:id', [userTokenAuth, adminRolAuth], (req, res) => {
-  let idResponse = req.params.id;
+  let idResponseQuestion = req.params.id;
   let body = req.body;
 
-  Survey.findByIdAndUpdate(
-    idResponse,
+  Response.findByIdAndUpdate(
+    idResponseQuestion,
     body,
     { new: true, runValidators: true },
-    (err, responseFromDb) => {
+    (err, responseQuestionFromDb) => {
       if (err) {
         return res.status(400).json({
           msg: 'Something is wrong',
         });
       }
 
-      if (!responseFromDb)
+      if (!responseQuestionFromDb)
         return res.status(500).json({ msg: "Can't update the survey", err });
       res.json({
-        responseFromDb,
+        responseQuestionFromDb,
       });
     }
   );

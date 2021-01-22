@@ -1,7 +1,6 @@
 const adminRolAuth = (req, res, next) => {
   let data = req.user;
 
-  console.log('ROLE:' + data.role);
   if (data.role === 'admin') {
     next();
   } else {
